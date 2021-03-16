@@ -1,4 +1,6 @@
 const express = require('express');
+const cors = require('cors');
+
 const postRouter = require('./routes/post');
 const userRouter = require('./routes/user');
 const db = require('./models');
@@ -10,6 +12,10 @@ db.sequelize.sync()
     })
     .catch(console.error);
 
+app.use(cors({
+    origin: '*',
+    credentials: false,
+}));
 app.use(express.json()); //fe에서 json으로 보내주는 데이터 처리
 app.use(express.urlencoded({ extended: true })); //form에서 데이터를 보낼때 데이터 처리
 
