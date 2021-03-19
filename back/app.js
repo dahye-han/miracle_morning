@@ -1,5 +1,7 @@
 const express = require('express');
 const cors = require('cors');
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
 
 const postRouter = require('./routes/post');
 const userRouter = require('./routes/user');
@@ -20,6 +22,11 @@ app.use(cors({
 }));
 app.use(express.json()); //fe에서 json으로 보내주는 데이터 처리
 app.use(express.urlencoded({ extended: true })); //form에서 데이터를 보낼때 데이터 처리
+app.use(cookieParser());
+app.use(session());
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 app.get('/', (req, res) => {
     res.send('hello express');
