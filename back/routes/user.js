@@ -1,11 +1,43 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
-const { User } =require('../models');
 
+const { User, Post } =require('../models');
+const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 const router = express.Router();
 
-router.post('/login', (req, res, next) => {
+router.get('/', async (req, res, next) => {
+    try {
+        if(req.user) {
+            const fullUserWithoutPassword = await User.findOne({
+                where: { id: req.user.id },
+                attributes: {
+                  exclude: ['password']   
+                },
+                include: [{
+                    model: Post,
+                    attributes: ['id'],
+                }, {
+                    model: User,
+                    as: 'Followings',
+                    attributes: ['id'],
+                }, {
+                    model: User,
+                    as: 'Followers',
+                    attributes: ['id'],
+                }]
+            });
+            return res.status(200).json(fullUserWithoutPassword);
+        } else {
+            res.status(200).json(null);
+        }
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
+
+router.post('/login', isNotLoggedIn,(req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
         if (err) {
             console.error(error);
@@ -18,13 +50,31 @@ router.post('/login', (req, res, next) => {
             if (loginErr) {
                 console.error(loginErr);
                 return next(loginErr);
-            }
-            return res.status(200).json(user);
+            };
+            const fullUserWithoutPassword = await User.findOne({
+                where: { id: user.id },
+                attributes: {
+                  exclude: ['password']   
+                },
+                include: [{
+                    model: Post,
+                    attributes: ['id'],
+                }, {
+                    model: User,
+                    as: 'Followings',
+                    attributes: ['id'],
+                }, {
+                    model: User,
+                    as: 'Followers',
+                    attributes: ['id'],
+                }]
+            });
+            return res.status(200).json(fullUserWithoutPassword);
         })
     })(req, res, next);
 });
 
-router.post('/', async (req, res, next) => { // post /user/
+router.post('/', isNotLoggedIn, async (req, res, next) => { // post /user/
     try{
         const exUser = await User.findOne({
             where: {
@@ -40,11 +90,17 @@ router.post('/', async (req, res, next) => { // post /user/
             nickname: req.body.nickname,
             password: hashedPassword,
         });
-        res.statue(201).send('OK');
+        res.status(201).send('OK');
     } catch (error) {
         console.error(error);
         next(error); //status 500
     }
 });
+
+router.post('/logout', isLoggedIn, (req, res) => {
+    req.logout();
+    req.session.destroy();
+    res.send('ok');
+})
 
 module.exports = router;

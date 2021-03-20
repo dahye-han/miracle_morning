@@ -5,8 +5,29 @@ import {
   LOG_OUT_REQUEST, LOG_OUT_SUCCESS, LOG_OUT_FAILURE,
   SIGN_UP_REQUEST, SIGN_UP_SUCCESS, SIGN_UP_FAILURE,
   FOLLOW_REQUEST, FOLLOW_SUCCESS, FOLLOW_FAILURE,
-  UNFOLLOW_REQUEST, UNFOLLOW_SUCCESS, UNFOLLOW_FAILURE,
+  UNFOLLOW_REQUEST, UNFOLLOW_SUCCESS, UNFOLLOW_FAILURE, 
+  LOAD_MY_INFO_REQUEST,LOAD_MY_INFO_SUCCESS, LOAD_MY_INFO_FAILURE
 } from '../reducers/user';
+
+function loadMyInfoAPI(data) {
+  return axios.get('/user');
+}
+
+function* loadMyInfo(action) {
+  try { // fork 비동기, call 동기
+    const result = yield call(loadMyInfoAPI, action.data);
+    yield delay(1000);
+    yield put({
+      type: LOAD_MY_INFO_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    yield put({
+      type: LOAD_MY_INFO_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
 
 function logInAPI(data) {
   return axios.post('/user/login', data);
@@ -108,6 +129,10 @@ function* unfollow(action) {
   }
 }
 
+function* watchLoadMyInfo() {
+  yield takeEvery(LOAD_MY_INFO_REQUEST, loadMyInfo);
+}
+
 function* watchFollow() {
   yield takeEvery(FOLLOW_REQUEST, follow);
 }
@@ -130,6 +155,7 @@ function* watchSignUp() {
 
 export default function* UserSaga() {
   yield all([
+    fork(watchLoadMyInfo),
     fork(watchFollow),
     fork(watchUnfollow),
     fork(watchLogIn),

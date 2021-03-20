@@ -15,7 +15,13 @@ const ErrorMessage = styled.div`
 
 const Signup = () => {
   const dispatch = useDispatch();
-  const { signUpLoading, signUpDone, signUpError } = useSelector((state) => state.user);
+  const { signUpLoading, signUpDone, signUpError, me } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if ((me && me.id)) {
+      Router.replace('/');
+    }
+  }, [me && me.id]);
 
   useEffect(() => {
     if(signUpDone) {
@@ -61,7 +67,7 @@ const Signup = () => {
       type: SIGN_UP_REQUEST,
       data: { email, password, nickname },
     });
-  }, [password, passwordCheck, term]);
+  }, [email, password, passwordCheck, term]);
 
   return (
     <AppLayout>
@@ -82,7 +88,7 @@ const Signup = () => {
         <div>
           <label htmlFor="user-password">비밀번호</label>
           <br />
-          <Input name="user-password" value={password} required onChange={onChangePassword} />
+          <Input name="user-password" type="password" value={password} required onChange={onChangePassword} />
         </div>
         <div>
           <label htmlFor="user-password-check">비밀번호체크</label>
