@@ -1,8 +1,9 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
+const { Op } = require('sequelize');
 
-const { User, Post } =require('../models');
+const { User, Post, Comment, Image } =require('../models');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 const router = express.Router();
 
@@ -93,6 +94,43 @@ router.post('/', isNotLoggedIn, async (req, res, next) => { // post /user/
     } catch (error) {
         console.error(error);
         next(error); //status 500
+    }
+});
+
+router.get('/:userId/posts', async (req, res, next) => {
+    try {
+        const where = { UserId: req.params.userId };
+        if (parseInt(req.query.lastId, 10)) { //초기 로딩이 아닐 떄
+            where.id = { [Op.lt]: parseInt(req.query.lastId, 10)}
+        };
+        const posts = await Post.findAll({
+            where,
+            limit: 10,
+            order: [
+                ['createdAt', 'DESC'],
+                [Comment, 'createdAt', 'DESC']
+            ],
+            include: [{
+                model: User,
+                attributes: ['id', 'nickname'],
+            }, {
+                model: Image,
+            }, {
+                model: Comment,
+                include: [{
+                    model: User,
+                    attributes: ['id', 'nickname'],
+                }]
+            }, {
+                model: User, //좋아요 누른 사람
+                as: 'Likers',
+                attributes: ['id'],
+            }],
+        });
+        res.status(200).json(posts);
+    } catch (error) {
+        console.error(error);
+        next(error);
     }
 });
 
