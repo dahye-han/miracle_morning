@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { Menu, Input, Row, Col } from 'antd';
 import styled, { createGlobalStyle } from 'styled-components';
 import { useSelector } from 'react-redux';
+import Router from 'next/router';
 
 import UseProfile from './UserProfile';
 import LoginForm from './LoginForm';
+import useInput from '../hooks/useInput';
 
 const Global = createGlobalStyle`
     .ant-row {
@@ -28,7 +30,12 @@ const SearchInput = styled(Input.Search)`
 `;
 
 const AppLayout = ({ children }) => {
+  const [searchInput, onChangeSearchInput] = useInput('');
   const { me } = useSelector((state) => state.user);
+
+  const onSearch = useCallback(() => {
+    Router.push(`/hashtag/${searchInput}`);
+  }, [searchInput])
 
   return (
     // eslint-disable-next-line react/jsx-filename-extension
@@ -44,6 +51,9 @@ const AppLayout = ({ children }) => {
         <Menu.Item>
           <SearchInput
             enterButton
+            value={searchInput}
+            onChange={onChangeSearchInput}
+            onSearch={onSearch}
           />
         </Menu.Item>
         <Menu.Item>

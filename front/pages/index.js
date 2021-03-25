@@ -1,15 +1,14 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { END } from 'redux-saga';
+import axios from 'axios';
 
 import AppLayout from '../components/AppLayout';
 import PostForm from '../components/PostForm';
 import PostCard from '../components/PostCard';
 import { LOAD_POSTS_REQUEST } from '../reducers/post';
 import { LOAD_MY_INFO_REQUEST } from '../reducers/user';
-
 import wrapper from '../store/configureStore';
-import axios from 'axios';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -24,7 +23,7 @@ const Home = () => {
 
   useEffect(() => {
     function onScroll() {
-      if (window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
+      if (window.pageYOffset + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
         if (hasMorePosts && !loadPostsLoading) {
           const lastId = mainPosts[mainPosts.length - 1]?.id;
           dispatch({
@@ -39,7 +38,6 @@ const Home = () => {
       window.removeEventListener('scroll', onScroll);
     };
   }, [hasMorePosts, loadPostsLoading, mainPosts]);
-
   return (
     <AppLayout>
       {me && <PostForm />}
