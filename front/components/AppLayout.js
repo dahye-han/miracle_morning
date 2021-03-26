@@ -56,9 +56,6 @@ const AppLayout = ({ children }) => {
             onSearch={onSearch}
           />
         </Menu.Item>
-        <Menu.Item>
-          <Link href="/signup"><a>SIGNUP</a></Link>
-        </Menu.Item>
       </Menu>
       <Row>
         <Col xs={24} md={6}>
