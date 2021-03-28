@@ -1,6 +1,8 @@
-import produce, { enableES5 } from 'immer';
+import { enableES5, produce } from 'immer';
 
-export default (...args) => {
-    enableES5();
-    return produce(...args);
-}
+ const produceFunction = (...args) => {
+  enableES5();
+  return produce(...args);
+};
+
+export default produceFunction;
