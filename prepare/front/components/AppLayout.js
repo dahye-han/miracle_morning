@@ -28,16 +28,16 @@ const AppLayout = ({ children }) => {
           theme="dark"
         >
           <Menu.Item icon={<CommentOutlined />}>
-            Home
+            <Link href="/"><a>Home</a></Link>
           </Menu.Item>
           <Menu.Item icon={<CalendarOutlined />}>
-            Record
+            <Link href="/record"><a>Record</a></Link>
           </Menu.Item>
           <Menu.Item icon={<UserOutlined />}>
-            Profile
+            <Link href="/profile"><a>Profile</a></Link>
           </Menu.Item>
           <Menu.Item icon={<SettingOutlined />}>
-            Setting
+            <Link href="/setting"><a>Setting</a></Link>
           </Menu.Item>
         </Menu>
       </Header>
