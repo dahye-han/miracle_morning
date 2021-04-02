@@ -29,6 +29,7 @@ const AppLayout = ({ children }) => {
             theme="dark"
             style={{margin:'15px'}}
           >
+            <div style={{height: '32px', margin: '16px', background: 'rgba(255,255,255,0.3)'}}></div>
             <Menu.Item icon={<CommentOutlined />} style={{fontSize:'15px', marginBottom: '15px'}}>
               <Link href="/"><a>HOME</a></Link>
             </Menu.Item>
