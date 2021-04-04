@@ -2,6 +2,7 @@ import Link from 'next/link';
 import React from 'react';
 
 import AppLayout from '../components/AppLayout';
+import LoginForm from '../components/LoginForm';
 
 const Home = () => {
     const isLoggedIn = true;
@@ -15,7 +16,7 @@ const Home = () => {
             </AppLayout> 
             : 
             <div style={{ display:'flex', justifyContent:'center', alignItems:'center', minHeight:'100vh' }}>
-                <Link href="/"><a>로그인</a></Link>
+                <LoginForm />
              </div>
             }
         </>
