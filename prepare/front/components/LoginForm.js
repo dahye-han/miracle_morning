@@ -1,16 +1,26 @@
 import React, { useCallback, useEffect } from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { useDispatch, useSelector } from 'react-redux';
 
 import useInput from '../hooks/useInput';
+import { loginRequestAction } from '../reducers/user';
 
 const LoginForm = () => {
+    const dispatch = useDispatch();
+    const { logInLoading, logInError } = useSelector((state) => state.user);
     const [email, onChangeEmail] = useInput('');
     const [password, onChangePassword] = useInput('');
 
+    useEffect(() => {
+        if(logInError) {
+            alert(logInError);
+        }
+    }, [logInError]);
+
     const onSubmitForm = useCallback(() => {
         console.log(email, password);
-        // dispatch(loginRequestAction({ email, password }));
+        dispatch(loginRequestAction({ email, password }));
     }, [email, password]);
 
     return (
@@ -58,6 +68,7 @@ const LoginForm = () => {
                 type="primary" 
                 htmlType="submit" 
                 className="login-form-button"
+                loading={logInLoading}
             >
             Log in
             </Button>

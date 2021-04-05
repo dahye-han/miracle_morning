@@ -1,15 +1,15 @@
-import Link from 'next/link';
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 import AppLayout from '../components/AppLayout';
 import LoginForm from '../components/LoginForm';
 
 const Home = () => {
-    const isLoggedIn = true;
+    const { logInDone } = useSelector((state) => state.user);
 
     return (
         <>
-            {isLoggedIn 
+            {logInDone 
             ? 
             <AppLayout>
                 Main

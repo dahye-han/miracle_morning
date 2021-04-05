@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import { Menu, Layout } from 'antd';
+import { Menu, Layout, Button } from 'antd';
 import {
   CommentOutlined,
   CalendarOutlined,
@@ -10,6 +10,8 @@ import {
 } from '@ant-design/icons';
 
 import { createGlobalStyle } from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutRequestAction } from '../reducers/user';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -17,6 +19,13 @@ const Global = createGlobalStyle`
 `;
 
 const AppLayout = ({ children }) => {
+  const dispatch = useDispatch();
+  const { logOutLoading } = useSelector((state) => state.user);
+
+  const onLogOut = useCallback(() => {
+    dispatch(logoutRequestAction());
+  }, []);
+
   return (
     // eslint-disable-next-line react/jsx-filename-extension
     <div>
@@ -29,7 +38,9 @@ const AppLayout = ({ children }) => {
             theme="dark"
             style={{margin:'15px'}}
           >
-            <div style={{height: '32px', margin: '16px', background: 'rgba(255,255,255,0.3)'}}></div>
+            <div style={{height: '32px', margin: '16px'}}>
+              <Button onClick={onLogOut} loading={logOutLoading}>로그아웃</Button>
+            </div>
             <Menu.Item icon={<CommentOutlined />} style={{fontSize:'15px', marginBottom: '15px'}}>
               <Link href="/"><a>HOME</a></Link>
             </Menu.Item>
