@@ -5,6 +5,13 @@ import { EllipsisOutlined, HeartOutlined, HeartTwoTone, MessageOutlined, Retweet
 import FollowButton from '../../../lecture/front/components/FollowButton';
 
 const PostCard = ({ post }) => {
+    const dispatch = useDispatch();
+    const [commentFormOpened, setCommentFormOpened] = useState(false);
+
+    const onToggleComment = useCallback(() => {
+        setCommentFormOpened((prev) => !prev);
+    }, []);
+
     return (
         <div>
             <Card
@@ -33,6 +40,29 @@ const PostCard = ({ post }) => {
                 title={post.RetweetId? `${post.User.nickname}님이 리트윗하셨습니다.` : null}
                 extra={id && <FollowButton post={post} />}
             ></Card>
+            {commentFormOpened && (
+                <div>
+                <CommentForm post={post} />
+                <List
+                    header={`${post.Comments.length}개의 댓글`}
+                    itemLayout="horizontal"
+                    dataSource={post.Comments}
+                    renderItem={(item) => (
+                    <li>
+                        <Comment
+                        author={item.User.nickname}
+                        avatar={(
+                            <Link href={`/user/${item.User.id}`}>
+                            <a><Avatar>{item.User.nickname[0]}</Avatar></a>
+                            </Link>
+                        )}
+                        content={item.content}
+                        />
+                    </li>
+                    )}
+                />
+                </div>
+            )}
         </div>
     );
 };
