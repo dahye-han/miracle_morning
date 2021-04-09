@@ -1,9 +1,14 @@
+const dotenv = require('dotenv');
 var mysql      = require('mysql');
+
+dotenv.config();
+
 var connection = mysql.createConnection({
-  host     : '127.0.0.1',
+  host     : 'localhost',
   user     : 'root',
   password : process.env.DB_PASSWORD,
-  database : 'react-miraclemorning'
+  database : 'react-miraclemorning',
+  port : '3307'
 });
  
 connection.connect();
