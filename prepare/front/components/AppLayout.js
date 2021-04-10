@@ -57,7 +57,7 @@ const AppLayout = ({ children }) => {
         </Sider>
         <Layout className="site-layout">
           <Header  style={{ padding: 0, background: '#fff' }} />
-          <Content style={{ minHeight: '360px', padding: '24px', background: 'orange',  margin: '0 16px' }}>
+          <Content style={{ padding: '24px', background: 'orange',  margin: '0 16px' }}>
             {children}
           </Content>
           <Footer style={{ textAlign: 'center' }}> HANAE @2021 </Footer>

@@ -14,7 +14,7 @@ const PostCard = ({ post }) => {
 
     return (
         <div>
-            <Card
+            {/* <Card
                 actions={[
                 <RetweetOutlined key="retweet" onClick={onRetweet} />,
                 liked
@@ -39,8 +39,8 @@ const PostCard = ({ post }) => {
                 ]}
                 title={post.RetweetId? `${post.User.nickname}님이 리트윗하셨습니다.` : null}
                 extra={id && <FollowButton post={post} />}
-            ></Card>
-            {commentFormOpened && (
+            ></Card> */}
+            {/* {commentFormOpened && (
                 <div>
                 <CommentForm post={post} />
                 <List
@@ -62,7 +62,7 @@ const PostCard = ({ post }) => {
                     )}
                 />
                 </div>
-            )}
+            )} */}
         </div>
     );
 };
