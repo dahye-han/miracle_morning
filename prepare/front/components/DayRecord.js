@@ -4,7 +4,9 @@ import { InboxOutlined } from '@ant-design/icons';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import useInput from '../hooks/useInput';
-import CheckBoxList from './CheckBoxList';
+import TodoTemplate from './todoList/TodoTemplate';
+import TodoHead from './todoList/TodoHead';
+import TodoList from './todoList/TodoList';
 
 const { Dragger } = Upload;
 
@@ -33,12 +35,15 @@ const DayRecord = ({dateKey}) => {
 
     return (
         <div>
-            Content of tab {dateKey}
             <Form style={{ margin: '10px 0 20px' }} encType="multipart/form-data" onFinish={onSubmit}>
-                <div style={{height: '300px'}}>
-                    <CheckBoxList />
+                <div style={{width: '49%', height:'800px' ,display:'inline-block'}}>
+                    Content of tab {dateKey}
+                    <TodoTemplate>
+                        <TodoHead />
+                        <TodoList />
+                    </TodoTemplate>
                 </div> 
-                <div >
+                <div style={{width: '49%', display:'inline-block'}}>
                     <input type="file" name="image" multiple hidden ref={imageInput} />
                     <Button >이미지 업로드</Button>
                     <Button type="primary"htmlType="submit">게시물 업로드</Button>
