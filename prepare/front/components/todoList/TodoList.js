@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import TodoCreate from './TodoCreate';
 import TodoItem from './TodoItem';
 
 const TodoListBlock = styled.div`
@@ -16,6 +17,7 @@ const TodoList = () => {
         <TodoItem text="컴포넌트 스타일링 하기" done={true} />
         <TodoItem text="Context 만들기" done={false} />
         <TodoItem text="기능 구현하기" done={false} />
+        <TodoCreate/>
       </TodoListBlock>
     );
 };

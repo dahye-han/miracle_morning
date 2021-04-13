@@ -1,10 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import moment from 'moment';
 
 const TodoHeadBlock = styled.div`
-  padding-top: 24px;
-  padding-left: 16px;
-  padding-right: 16px;
+  padding-top: 38px;
+  padding-left: 30px;
+  padding-right: 30px;
   padding-bottom: 12px;
   border-bottom: 1px solid #e9ecef;
   h1 {
@@ -25,14 +27,21 @@ const TodoHeadBlock = styled.div`
   }
 `;
 
-const TodoHead = () => {
+const TodoHead = ({selectDate}) => {
+    const selDate = moment(selectDate).format('LL');
+    const selDateName = moment(selectDate).format('dddd');
+
     return (
         <TodoHeadBlock>
-            <h1>2019년 7월 10일</h1>
-            <div className="day">수요일</div>
+            <h1>{selDate}</h1>
+            <div className="day">{selDateName}</div>
             <div className="tasks-left">할 일 2개 남음</div>
         </TodoHeadBlock>
     );
+};
+
+TodoHead.propTypes = { 
+  selectDate: PropTypes.string.isRequired,
 };
 
 export default TodoHead;

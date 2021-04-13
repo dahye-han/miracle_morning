@@ -1,10 +1,12 @@
 import React from 'react';
 import { Tabs, Radio } from 'antd';
 import DayRecord from './DayRecord';
+import moment from 'moment';
 
 const { TabPane } = Tabs;
 
 const DayList = () => {
+    const tabList = [{'data':'20210410'}, {'data':'20210411'}, {'data':'20210412'}, {'data':'20210413'}, {'data':'20210414'}, {'data':'20210415'}, {'data':'20210416'}];
 
     return (
         <>
@@ -13,9 +15,9 @@ const DayList = () => {
             </div>
             <div style={{width:'69%', display: 'inline-block'}}>
                 <Tabs defaultActiveKey="3" tabPosition="top">
-                {[...Array.from({ length: 7 }, (v, i) => i)].map(i => (
-                    <TabPane tab={`Tab-${i}`} key={i} disabled={i === 28}>
-                        <DayRecord dateKey={i}/>
+                {tabList.map((tab,i) => (
+                    <TabPane tab={tab.data} key={i}>
+                        <DayRecord dateKey={i} selectDate={tab.data}/>
                     </TabPane>
                 ))}
                 </Tabs>

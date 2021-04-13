@@ -7,11 +7,10 @@ import useInput from '../hooks/useInput';
 import TodoTemplate from './todoList/TodoTemplate';
 import TodoHead from './todoList/TodoHead';
 import TodoList from './todoList/TodoList';
-import TodoCreate from './todoList/TodoCreate';
 
 const { Dragger } = Upload;
 
-const DayRecord = ({dateKey}) => {
+const DayRecord = ({dateKey, selectDate}) => {
     const dispatch = useDispatch();
     const imageInput = useRef();
     const [text, onChangeText, setText] = useInput('');
@@ -40,9 +39,8 @@ const DayRecord = ({dateKey}) => {
                 <div style={{width: '49%', height:'800px' ,display:'inline-block'}}>
                     Content of tab {dateKey}
                     <TodoTemplate>
-                        <TodoHead />
+                        <TodoHead selectDate={selectDate}/>
                         <TodoList />
-                        <TodoCreate />
                     </TodoTemplate>
                 </div> 
                 <div style={{width: '49%', display:'inline-block'}}>
@@ -56,7 +54,8 @@ const DayRecord = ({dateKey}) => {
 };
 
 DayRecord.propTypes = { 
-    dateKey: PropTypes.number.isRequired
+    dateKey: PropTypes.number.isRequired,
+    selectDate: PropTypes.string.isRequired,
 };
 
 export default DayRecord;
