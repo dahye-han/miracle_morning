@@ -27,6 +27,8 @@ const TodoHeadBlock = styled.div`
   }
 `;
 
+moment.locale('ko');
+
 const TodoHead = ({selectDate}) => {
     const selDate = moment(selectDate).format('LL');
     const selDateName = moment(selectDate).format('dddd');
