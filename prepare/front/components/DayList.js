@@ -8,7 +8,14 @@ const { TabPane } = Tabs;
 moment.locale('ko');
 
 const DayList = () => {
-    const tabList = [{'data':'20210410'}, {'data':'20210411'}, {'data':'20210412'}, {'data':'20210413'}, {'data':'20210414'}, {'data':'20210415'}, {'data':'20210416'}];
+    const tabList = [];
+    // const today = moment().subtract(3).format('YYYYMMDD');
+    // tabList.push(today);
+    for(let i = -3; i<4; i++) {
+        console.log(i);
+        console.log(moment().add(i, 'days').format('YYYYMMDD'))
+        tabList.push(moment().add(i, 'days').format('YYYYMMDD'));
+    }
 
     return (
         <>
@@ -18,8 +25,8 @@ const DayList = () => {
             <div style={{width:'69%', display: 'inline-block'}}>
                 <Tabs defaultActiveKey="3" tabPosition="top">
                 {tabList.map((tab,i) => (
-                    <TabPane tab={moment(tab.data).format('LL')} key={i}>
-                        <DayRecord dateKey={i} selectDate={tab.data}/>
+                    <TabPane tab={moment(tab).format('LL')} key={i}>
+                        <DayRecord dateKey={i} selectDate={tab}/>
                     </TabPane>
                 ))}
                 </Tabs>
