@@ -9,11 +9,7 @@ moment.locale('ko');
 
 const DayList = () => {
     const tabList = [];
-    // const today = moment().subtract(3).format('YYYYMMDD');
-    // tabList.push(today);
     for(let i = -3; i<4; i++) {
-        console.log(i);
-        console.log(moment().add(i, 'days').format('YYYYMMDD'))
         tabList.push(moment().add(i, 'days').format('YYYYMMDD'));
     }
 
