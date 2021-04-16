@@ -37,7 +37,6 @@ const DayRecord = ({dateKey, selectDate}) => {
         <div>
             <Form style={{ margin: '10px 0 20px' }} encType="multipart/form-data" onFinish={onSubmit}>
                 <div style={{width: '49%', height:'800px' ,display:'inline-block'}}>
-                    Content of tab {dateKey}
                     <TodoTemplate>
                         <TodoHead selectDate={selectDate}/>
                         <TodoList />

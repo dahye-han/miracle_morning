@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tabs, Radio } from 'antd';
+import { Tabs } from 'antd';
 import DayRecord from './DayRecord';
 import moment from 'moment';
 
@@ -15,9 +15,6 @@ const DayList = () => {
 
     return (
         <>
-            <div style={{width:'29%', display: 'inline-block'}}>
-                date
-            </div>
             <div style={{width:'69%', display: 'inline-block'}}>
                 <Tabs defaultActiveKey="3" tabPosition="top">
                 {tabList.map((tab,i) => (
