@@ -15,7 +15,7 @@ const DayList = () => {
 
     return (
         <>
-            <div style={{width:'69%', display: 'inline-block'}}>
+            <div style={{margin:"auto"}}>
                 <Tabs defaultActiveKey="3" tabPosition="top">
                 {tabList.map((tab,i) => (
                     <TabPane tab={moment(tab).format('LL')} key={i}>

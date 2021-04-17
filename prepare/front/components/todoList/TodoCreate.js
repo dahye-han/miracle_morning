@@ -1,32 +1,5 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
-import { MdAdd } from 'react-icons/md';
-
-const CircleButton = styled.button`
-  background: #38d9a9;
-  &:hover {
-    background: #63e6be;
-  }
-  &:active {
-    background: #20c997;
-  }
-
-  z-index: 5;
-  cursor: pointer;
-  width: 34px;
-  height: 34px;
-  display: block;
-  align-items: center;
-  justify-content: center;
-  font-size: 60px;
-  left: 50%;
-  bottom: 0px;
-  color: white;
-  border-radius: 50%;
-  border: none;
-  outline: none;
-  display: flex;
-`;
 
 const InsertFormPositioner = styled.div`
   width: 100%;
@@ -40,7 +13,7 @@ const InsertForm = styled.form`
   padding-left: 32px;
   padding-top: 32px;
   padding-right: 32px;
-  padding-bottom: 72px;
+  padding-bottom: 32px;
 
   border-bottom-left-radius: 16px;
   border-bottom-right-radius: 16px;
@@ -58,22 +31,13 @@ const Input = styled.input`
 `;
 
 const TodoCreate = () => {
-    const [open, setOpen] = useState(false);
-
-    const onToggle = () => setOpen(!open);
-
     return (
         <>
-            {open && (
-                <InsertFormPositioner>
-                <InsertForm>
-                    <Input autoFocus placeholder="할 일을 입력 후, Enter 를 누르세요" />
-                </InsertForm>
-                </InsertFormPositioner>
-            )}
-            <CircleButton onClick={onToggle} open={open}>
-                <MdAdd />
-            </CircleButton>
+            <InsertFormPositioner>
+            <InsertForm>
+                <Input autoFocus placeholder="할 일을 입력 후, Enter 를 누르세요" />
+            </InsertForm>
+            </InsertFormPositioner>
         </>
     );
 };
